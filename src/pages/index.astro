@@ -205,10 +205,7 @@ import { Icon } from 'astro-icon/components';
     .fan-label { font-size: 1rem; font-weight: 800; color: var(--text); margin-top: auto; padding-top: 0.5rem; }
     .fan-desc {
       font-size: 0.8rem; color: #374151; line-height: 1.6;
-      max-height: 0; overflow: hidden; opacity: 0;
-      transition: max-height 0.4s ease, opacity 0.35s ease;
     }
-    .fan-card.active .fan-desc { max-height: 160px; opacity: 1; }
     .fan-pills { display: flex; gap: 0.35rem; flex-wrap: wrap; }
     .fan-pills span {
       font-size: 0.72rem; font-weight: 700;
@@ -269,7 +266,6 @@ import { Icon } from 'astro-icon/components';
       .fan-card { margin: 0; width: 200px; min-height: 220px; scroll-snap-align: center; }
       .fan-card:nth-child(n) { transform: none !important; }
       .fan-card.active { transform: none !important; box-shadow: var(--shadow-lg) !important; }
-      .fan-card .fan-desc { max-height: none !important; opacity: 1 !important; }
     }
   </style>
 </head>
