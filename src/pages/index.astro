@@ -8,7 +8,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BlotzTask – AI-Powered ADHD Task Manager</title>
   <meta name="description" content="The AI-powered way to manage ADHD tasks. Quick task generation, AI breakdown, and easy capture." />
-  <link rel="icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" href="/shared-pic/bun-icon.png" />
+  <link rel="apple-touch-icon" href="/shared-pic/bun-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
@@ -258,7 +259,7 @@
         <div class="logo-mark">B</div>
         BlotzTask
       </a>
-      <button class="lang-btn" id="lang-toggle" onclick="toggleLang()">
+      <button class="lang-btn" id="lang-toggle">
         <span id="lang-label">中文</span>
       </button>
     </div>
@@ -270,7 +271,7 @@
     <div class="blob blob-b"></div>
     <div class="hero-inner">
       <div class="hero-text">
-        <div class="hero-badge" id="hero-badge">✨ AI-Powered ADHD Tool</div>
+       
         <h1 class="hero-title" id="hero-title">The AI-powered way to manage ADHD tasks!</h1>
         <p class="hero-sub" id="hero-sub">Use AI to tackle your daily tasks: Quick task generation&nbsp;•&nbsp;AI breakdown&nbsp;•&nbsp;Easy capture</p>
         <div class="hero-downloads">
@@ -288,8 +289,24 @@
           <a class="dl-btn dl-and"
             href="https://play.google.com/store/apps/details?id=com.blotz.blotztask&hl=en"
             target="_blank" rel="noopener noreferrer">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M3.18 23.76c.38.21.83.22 1.22.04L14.84 12 4.4.2C4.01.02 3.57.02 3.18.24 2.42.67 2 1.52 2 2.56v18.88c0 1.04.42 1.89 1.18 2.32zM16.55 13.71l2.89 2.89-9.58 5.51 6.69-8.4zm3.38-3.38c.67.38 1.07 1.04 1.07 1.76s-.4 1.38-1.06 1.76l-2.1 1.21-3.19-3.19 3.19-3.19 2.09 1.65zM9.86 12L4.17 6.31 13.85 11.9l-3.99.1z"/>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0_47_2)">
+              <mask id="mask0_47_2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+              <path d="M24 0H0V24H24V0Z" fill="white"/>
+              </mask>
+              <g mask="url(#mask0_47_2)">
+              <path d="M21.3995 12.9508L16.8795 15.2108L13.6895 12.0208L16.9095 8.80078L21.3995 11.0508C22.1895 11.4408 22.1895 12.5608 21.3995 12.9508Z" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2 9.06025V3.07026C2 2.27026 2.83 1.76024 3.55 2.11024L16.92 8.80024L13.7 12.0202L4.12 21.6003L3.54 21.8903C2.83 22.2403 2 21.7303 2 20.9303V13.5703" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M16.8891 15.2095L4.11914 21.5995L13.6991 12.0195L16.8891 15.2095Z" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M13.6998 12.0201L4.08984 2.41016" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M16.9206 15.2409L16.8906 15.2109" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
+              </g>
+              <defs>
+              <clipPath id="clip0_47_2">
+              <rect width="24" height="24" fill="white"/>
+              </clipPath>
+              </defs>
             </svg>
             <div>
               <span class="dl-small" id="dl-and-s">Get it on</span>
@@ -446,6 +463,8 @@
     };
 
     let currentLang: 'en' | 'zh' = 'en';
+
+    document.getElementById('lang-toggle')?.addEventListener('click', toggleLang);
 
     function toggleLang() {
       currentLang = currentLang === 'en' ? 'zh' : 'en';
