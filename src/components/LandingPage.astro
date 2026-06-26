@@ -69,6 +69,18 @@ const t = (key: TranslationKey): string =>
       display: flex; align-items: center; gap: 0.6rem;
       text-decoration: none; font-weight: 900; font-size: 1.25rem; color: var(--text);
     }
+    .logo-icon {
+      width: 32px; height: 32px; flex-shrink: 0;
+      background-color: white;
+      -webkit-mask-image: url('/shared-pic/bun-white.svg');
+      -webkit-mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-image: url('/shared-pic/bun-white.svg');
+      mask-size: contain;
+      mask-repeat: no-repeat;
+      mask-position: center;
+    }
     .logo-mark {
       width: 36px; height: 36px;
       background: linear-gradient(135deg, var(--green), var(--blue));
@@ -397,7 +409,7 @@ const t = (key: TranslationKey): string =>
   <nav class="nav">
     <div class="nav-inner">
       <a class="logo" href="/">
-        <img src="/shared-pic/bun-white.svg" height="32" alt="BlotzTask" style="border-radius:10px;width:auto;" />
+        <div class="logo-icon" aria-hidden="true"></div>
         BlotzTask
       </a>
     </div>
@@ -652,7 +664,21 @@ const t = (key: TranslationKey): string =>
     });
 
     const nav = document.querySelector('.nav') as HTMLElement;
-    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 10);
+    const logoIcon = document.querySelector('.logo-icon') as HTMLElement;
+    const heroArea = document.querySelector('.hero-area') as HTMLElement;
+
+    const onScroll = () => {
+      const heroH = heroArea?.offsetHeight ?? 600;
+      const ratio = Math.min(Math.max(window.scrollY / heroH, 0), 1);
+
+      // Interpolate white (255,255,255) → #8AC936 (138,201,54)
+      const r = Math.round(255 + (138 - 255) * ratio);
+      const g = Math.round(255 + (201 - 255) * ratio);
+      const b = Math.round(255 + (54  - 255) * ratio);
+      logoIcon.style.backgroundColor = `rgb(${r},${g},${b})`;
+
+      nav.classList.toggle('scrolled', window.scrollY > 10);
+    };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
