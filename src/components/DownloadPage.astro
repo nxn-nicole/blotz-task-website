@@ -1,0 +1,151 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
+import { defaultLocale } from '../i18n/landing';
+
+const locale = Astro.currentLocale ?? defaultLocale;
+const zh = locale === 'zh';
+
+// The release workflow overwrites this file on every release, so this link never changes.
+const apkUrl = 'https://stgblotztaskprod.blob.core.windows.net/downloads/BlotzTask-latest.apk';
+const appStoreUrl = 'https://apps.apple.com/au/app/blotztask-adhd-time-manager/id6752492404';
+const playUrl = 'https://play.google.com/store/apps/details?id=com.blotz.blotztask';
+
+const c = zh
+  ? {
+      title: '下载 BlotzTask',
+      subtitle: '选择适合你手机的下载方式。用不了 Google Play 的安卓手机，请下载安装包。',
+      apk: '下载安卓安装包',
+      apkNote: '约 160 MB，建议在 Wi-Fi 下下载。每次发版后这里都是最新版。',
+      wechat: '微信里无法下载安装包：请点右上角 ··· ，选择「在浏览器打开」。',
+      helpTitle: '安装不了？',
+      help: [
+        '下载完成后打开安装包，如果提示「禁止安装未知应用」，请按提示允许浏览器安装应用。',
+        '华为 / 荣耀手机：如果开启了「纯净模式」，安装时选择「继续安装」，或在 设置 → 系统和更新 → 纯净模式 中暂时关闭。',
+        '已经装了旧版本的话，直接安装新版本即可覆盖，数据不会丢失，无需先卸载。',
+        '提示「解析包时出现问题」：一般是没下载完整，请重新下载。',
+      ],
+    }
+  : {
+      title: 'Download BlotzTask',
+      subtitle: 'Pick the right download for your phone. Android phones without Google Play can install the APK.',
+      apk: 'Download Android APK',
+      apkNote: 'About 160 MB, best over Wi-Fi. Always the latest version.',
+      wechat: "WeChat can't download APK files. Tap ··· in the top right and choose \"Open in browser\".",
+      helpTitle: "Can't install it?",
+      help: [
+        'If Android blocks apps from unknown sources, allow your browser to install apps when it asks.',
+        'Huawei / Honor phones with Pure Mode on: choose "Continue installation", or turn it off for now in Settings → System & updates → Pure Mode.',
+        'Already have an older version? Install the new one over it. Your data stays, no need to uninstall first.',
+        '"There was a problem parsing the package" usually means the download was cut short. Download it again.',
+      ],
+    };
+
+const description = zh
+  ? '下载 BlotzTask：App Store、Google Play，以及给用不了 Google Play 的安卓手机的安装包。'
+  : 'Download BlotzTask from the App Store, Google Play, or as an Android APK.';
+---
+
+<Layout title={`${c.title} | BlotzTask`} description={description}>
+  <div class="hero-area">
+    <div class="sub-hero">
+      <h1>{c.title}</h1>
+      <p>{c.subtitle}</p>
+    </div>
+  </div>
+  <svg class="sub-wave" viewBox="0 0 1440 70" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0 35 C360 70 720 0 1080 35 C1260 53 1380 22 1440 35 L1440 70 L0 70 Z" fill="#ffffff"/>
+  </svg>
+
+  <section class="dl-body" data-zh={zh ? 'true' : 'false'}>
+    <p class="wechat-tip" role="alert" hidden>{c.wechat}</p>
+
+    <!-- Order is set per device by the script below: iPhone → App Store first;
+         Android → APK first in Chinese, Google Play first in English. -->
+    <div class="dl-btns">
+      <a class="dl-btn dl-apk" href={apkUrl} download>
+        <Icon name="lucide:download" width={20} height={20} />
+        {c.apk}
+      </a>
+      <a class="dl-btn dl-play" href={playUrl} target="_blank" rel="noopener noreferrer">
+        <Icon name="simple-icons:googleplay" width={20} height={20} />
+        Google Play
+      </a>
+      <a class="dl-btn dl-ios" href={appStoreUrl} target="_blank" rel="noopener noreferrer">
+        <Icon name="simple-icons:apple" width={20} height={20} />
+        App Store
+      </a>
+    </div>
+    <p class="dl-note">{c.apkNote}</p>
+
+    <div class="help-panel">
+      <h2>{c.helpTitle}</h2>
+      <ul>
+        {c.help.map((line) => <li>{line}</li>)}
+      </ul>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const body = document.querySelector<HTMLElement>('.dl-body');
+  if (body) {
+    const ua = navigator.userAgent;
+    const isIos = /iPhone|iPad|iPod/i.test(ua);
+    const isAndroid = /Android/i.test(ua);
+    // WeChat's in-app browser blocks APK downloads, so send people to a real browser.
+    if (/MicroMessenger/i.test(ua)) {
+      body.querySelector<HTMLElement>('.wechat-tip')?.removeAttribute('hidden');
+    }
+    const zh = body.dataset.zh === 'true';
+    const first = isIos ? 'ios' : isAndroid && !zh ? 'play' : 'apk';
+    body.dataset.first = first;
+  }
+</script>
+
+<style>
+  .sub-hero { position: relative; text-align: center; padding: 7rem 1.5rem 3rem; max-width: 680px; margin: 0 auto; }
+  .sub-hero h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: var(--text); margin-bottom: 1rem; }
+  .sub-hero p { font-size: 1.1rem; color: #374151; line-height: 1.75; }
+  .sub-wave { margin-top: -1px; display: block; width: 100%; }
+
+  .dl-body {
+    background: #fff; max-width: 520px; margin: 0 auto;
+    padding: 2.5rem 1.5rem 5rem;
+    display: flex; flex-direction: column; gap: 1.25rem;
+  }
+
+  .wechat-tip {
+    background: #fff7e6; border: 1px solid #f5c26b; color: #8a5a00;
+    border-radius: 16px; padding: 1rem 1.25rem; font-weight: 800; line-height: 1.6;
+  }
+
+  .dl-btns { display: flex; flex-direction: column; gap: 0.85rem; }
+  .dl-btn {
+    display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+    padding: 1rem 1.5rem; border-radius: 16px;
+    font-weight: 900; font-size: 1.05rem; text-decoration: none;
+    color: var(--text); background: #fff; border: 2px solid #e5e7eb;
+    transition: transform 0.2s ease;
+  }
+  .dl-btn:hover { transform: translateY(-2px); }
+
+  /* The button for this visitor goes first and is filled in brand colours. */
+  .dl-body[data-first='apk'] .dl-apk,
+  .dl-body[data-first='play'] .dl-play,
+  .dl-body[data-first='ios'] .dl-ios {
+    order: -1; color: #fff; border-color: transparent;
+    background: linear-gradient(135deg, var(--green), var(--blue));
+    box-shadow: 0 16px 36px -20px rgba(52,134,243,0.7);
+  }
+
+  .dl-note { text-align: center; color: #6b7280; font-size: 0.9rem; line-height: 1.6; }
+
+  .help-panel {
+    background: linear-gradient(180deg, #f8fbf1, #ffffff);
+    border: 1px solid #eaf1dd; border-radius: 24px; padding: 1.75rem 1.5rem;
+  }
+  .help-panel h2 { font-size: 1.25rem; font-weight: 900; color: var(--text); margin-bottom: 0.75rem; }
+  .help-panel ul { padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.6rem; }
+  .help-panel li { color: #374151; line-height: 1.65; }
+</style>
